@@ -110,8 +110,8 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .month-grid.zoom-0{--month-row-min:62px}
 .month-grid.zoom-1{--month-row-min:69px}
 .month-grid.zoom-2{--month-row-min:80px}
-.month-grid.zoom-3{--month-row-min:132px}
-.month-grid.zoom-4{--month-row-min:176px}
+.month-grid.zoom-3{--month-row-min:148px}
+.month-grid.zoom-4{--month-row-min:188px}
 .day-cell{padding:2px 2px 1px;contain:layout paint;min-width:0;align-content:start}
 .month-grid.zoom-3 .day-cell,.month-grid.zoom-4 .day-cell{contain:layout;overflow:hidden}
 .day-number{height:25px;min-width:25px;border-radius:12.5px;margin:0 auto 0;font-size:16px;font-weight:500;letter-spacing:-.18px;font-variant-numeric:tabular-nums}
@@ -125,8 +125,9 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .event-chip.fill{background:color-mix(in srgb,var(--c) 16%,transparent);padding:0 2px}
 .event-chip.icon,.event-chip.star{background:transparent;padding:0 1px}
 .event-chip .event-label{display:flex;flex:1 1 auto;min-width:0;max-width:100%;overflow:hidden;flex-direction:row;align-items:center}
+.event-chip .event-title-line{display:flex;align-items:center;gap:2px;width:100%;min-width:0;overflow:hidden}
 .event-chip .event-title{display:block;flex:1 1 auto;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);line-height:13px}
-.event-chip .event-time{display:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+.event-chip .event-time{display:none;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--c)}
 .chip-symbol{flex:0 0 auto;display:inline-grid;place-items:center;color:var(--c)}
 .chip-symbol.calendar{position:relative;width:8px;height:8px;border-radius:2px;background:var(--c)}
 .chip-symbol.calendar::before,.chip-symbol.calendar::after{content:"";position:absolute;left:2px;right:2px;height:1px;border-radius:1px;background:#fff}
@@ -136,18 +137,19 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .event-chip.reminder .marker{display:none}
 .day-cell.has-more .detail-wrap{padding-bottom:12px}
 .more{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);min-width:18px;height:11px;padding:0 4px;border-radius:5.5px;display:grid;place-items:center;background:color-mix(in srgb,var(--secondary) 13%,transparent);color:var(--secondary);font-size:8px;font-weight:600;line-height:11px;text-align:center;font-variant-numeric:tabular-nums;z-index:2}
-/* High zoom mirrors iOS: fill events become title + time; icon/star/reminder stay one line. */
+/* High zoom mirrors iOS: every non-all-day event becomes title + time, independent of chipStyle. */
 .month-grid.zoom-3 .detail-wrap,.month-grid.zoom-4 .detail-wrap{overflow:visible;gap:2px;padding-bottom:2px}
-.month-grid.zoom-3 .event-chip.fill,.month-grid.zoom-4 .event-chip.fill{height:28px;min-height:28px;max-height:28px;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;padding:1px 3px;overflow:hidden}
-.month-grid.zoom-4 .event-chip.fill{height:30px;min-height:30px;max-height:30px;padding-top:2px;padding-bottom:2px}
-.month-grid.zoom-3 .event-chip.fill .event-label,.month-grid.zoom-4 .event-chip.fill .event-label{display:block;width:100%;overflow:hidden}
-.month-grid.zoom-3 .event-chip.fill .event-title,.month-grid.zoom-4 .event-chip.fill .event-title{font-size:9.5px;line-height:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.month-grid.zoom-4 .event-chip.fill .event-title{font-size:10px;line-height:13px}
-.month-grid.zoom-3 .event-chip.fill .event-time,.month-grid.zoom-4 .event-chip.fill .event-time{display:block;font-size:8.25px;line-height:10px;font-weight:500;color:var(--c)}
-.month-grid.zoom-4 .event-chip.fill .event-time{font-size:8.75px;line-height:10px}
-.month-grid.zoom-3 .event-chip.icon,.month-grid.zoom-3 .event-chip.star,.month-grid.zoom-3 .event-chip.reminder,.month-grid.zoom-4 .event-chip.icon,.month-grid.zoom-4 .event-chip.star,.month-grid.zoom-4 .event-chip.reminder{height:14px;min-height:14px;max-height:14px;align-items:center;overflow:hidden;white-space:nowrap}
-.month-grid.zoom-4 .event-chip.icon,.month-grid.zoom-4 .event-chip.star,.month-grid.zoom-4 .event-chip.reminder{height:15px;min-height:15px;max-height:15px;font-size:9.75px}
-.month-grid.zoom-3 .event-chip.icon .event-title,.month-grid.zoom-3 .event-chip.star .event-title,.month-grid.zoom-3 .event-chip.reminder .event-title,.month-grid.zoom-4 .event-chip.icon .event-title,.month-grid.zoom-4 .event-chip.star .event-title,.month-grid.zoom-4 .event-chip.reminder .event-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.month-grid.zoom-3 .event-chip.timed,.month-grid.zoom-4 .event-chip.timed{height:28px;min-height:28px;max-height:28px;align-items:flex-start;justify-content:center;padding:1px 3px;overflow:hidden}
+.month-grid.zoom-4 .event-chip.timed{height:30px;min-height:30px;max-height:30px;padding-top:2px;padding-bottom:2px}
+.month-grid.zoom-3 .event-chip.timed .event-label,.month-grid.zoom-4 .event-chip.timed .event-label{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;width:100%;overflow:hidden}
+.month-grid.zoom-3 .event-chip.timed .event-title-line,.month-grid.zoom-4 .event-chip.timed .event-title-line{display:flex;align-items:center;gap:2px;width:100%;min-width:0;overflow:hidden}
+.month-grid.zoom-3 .event-chip.timed .event-title,.month-grid.zoom-4 .event-chip.timed .event-title{font-size:9.5px;line-height:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.month-grid.zoom-4 .event-chip.timed .event-title{font-size:10px;line-height:13px}
+.month-grid.zoom-3 .event-chip.timed .event-time,.month-grid.zoom-4 .event-chip.timed .event-time{display:block;font-size:8.25px;line-height:10px;font-weight:500;color:var(--c)}
+.month-grid.zoom-4 .event-chip.timed .event-time{font-size:8.75px;line-height:10px}
+.month-grid.zoom-3 .event-chip.all-day,.month-grid.zoom-3 .event-chip.reminder,.month-grid.zoom-4 .event-chip.all-day,.month-grid.zoom-4 .event-chip.reminder{height:14px;min-height:14px;max-height:14px;align-items:center;overflow:hidden;white-space:nowrap}
+.month-grid.zoom-4 .event-chip.all-day,.month-grid.zoom-4 .event-chip.reminder{height:15px;min-height:15px;max-height:15px;font-size:9.75px}
+.month-grid.zoom-3 .event-chip.all-day .event-title,.month-grid.zoom-3 .event-chip.reminder .event-title,.month-grid.zoom-4 .event-chip.all-day .event-title,.month-grid.zoom-4 .event-chip.reminder .event-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .month-title{font-size:34px;font-weight:700;letter-spacing:-.9px;line-height:40px;margin:3px 0 0 4px}.weekdays{height:28px;font-size:11px;font-weight:600;letter-spacing:.01em}
 
 /* Day zoom is also continuously adjustable while pinching. */
@@ -470,7 +472,7 @@ function seed(){const t=key(today),d1=key(add(today,1)),d2=key(add(today,2));ret
 ]}
 let state;try{state=JSON.parse(localStorage.getItem('ios18-calendar-web'))||structuredClone(defaults)}catch{state=structuredClone(defaults)}if(!state.events?.length)state.events=seed();if(!Number.isFinite(state.monthZoom))state.monthZoom=state.monthStyle==='compact'?0:state.monthStyle==='stacked'?1:2;if(!Number.isFinite(state.dayZoom))state.dayZoom=1;
 state.calendars=Array.isArray(state.calendars)&&state.calendars.length?state.calendars:structuredClone(defaults.calendars);state.calendars.forEach(cal=>{if(!cal.chipStyle)cal.chipStyle=cal.id==='holidays'?'icon':'fill'});if(!state.calendars.some(cal=>cal.id==='holidays-2'))state.calendars.push({id:'holidays-2',account:'Gmail',name:'国民の祝日',color:'#ff9500',visible:true,readonly:true,chipStyle:'star'});
-const MONTH_ROW_STEPS=[62,69,80,132,176],DAY_PPM_STEPS=[.72,.92,1.15,1.45,1.80];
+const MONTH_ROW_STEPS=[62,69,80,148,188],DAY_PPM_STEPS=[.72,.92,1.15,1.45,1.80];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function interpStep(values,level){const x=clamp(level,0,values.length-1),lo=Math.floor(x),hi=Math.ceil(x),t=x-lo;return values[lo]+(values[hi]-values[lo])*t}
 function currentDayPpm(){return DAY_PPM_STEPS[clamp(Math.round(state.dayZoom??1),0,DAY_PPM_STEPS.length-1)]}
@@ -492,7 +494,7 @@ function renderBottom(){$('#calendarsBtn').innerHTML=icon('calendar')+'<span>カ
 function startGrid(y,m){const first=new Date(y,m,1),offset=(first.getDay()-state.weekStart+7)%7;return add(first,-offset)}
 function monthChipStyle(e){if(e.type==='reminder')return 'reminder';const style=getCal(e.calendarId)?.chipStyle;return style==='icon'||style==='star'||style==='fill'?style:'fill'}
 function monthChipLead(style){if(style==='icon')return '<span class="chip-symbol calendar" aria-hidden="true"></span>';if(style==='star')return '<span class="chip-symbol star" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 .7 7.55 3.84l3.47.5-2.51 2.45.59 3.46L6 8.62 2.9 10.25l.59-3.46L.98 4.34l3.47-.5L6 .7Z"/></svg></span>';return ''}
-function monthEventChip(e,zoom){const style=monthChipStyle(e),c=color(e),done=e.completed?'done':'',allDay=e.allDay?'all-day':'';if(e.type==='reminder')return `<button class="event-chip reminder ${done}" data-event="${e.id}" style="--c:${c}">${reminderCheck(e)}<span class="event-label"><span class="event-title">${esc(e.title)}</span></span></button>`;const showTime=zoom>=3&&style==='fill'&&!e.allDay;return `<button class="event-chip ${style} ${allDay}" data-event="${e.id}" data-chip-style="${style}" style="--c:${c}">${monthChipLead(style)}<span class="event-label"><span class="event-title">${esc(e.title)}</span>${showTime?`<span class="event-time">${fmt(e.start)}</span>`:''}</span></button>`}
+function monthEventChip(e,zoom){const style=monthChipStyle(e),c=color(e),done=e.completed?'done':'',allDay=e.allDay===true?'all-day':'',timed=e.allDay===true?'':'timed';if(e.type==='reminder')return `<button class="event-chip reminder ${done}" data-event="${e.id}" style="--c:${c}">${reminderCheck(e)}<span class="event-label"><span class="event-title-line"><span class="event-title">${esc(e.title)}</span></span></span></button>`;const showTime=zoom>=3&&e.allDay!==true;return `<button class="event-chip ${style} ${allDay} ${timed}" data-event="${e.id}" data-chip-style="${style}" style="--c:${c}"><span class="event-label"><span class="event-title-line">${monthChipLead(style)}<span class="event-title">${esc(e.title)}</span></span>${showTime?`<span class="event-time">${fmt(e.start)}</span>`:''}</span></button>`}
 function renderMonth(d){
  const y=d.getFullYear(),m=d.getMonth(),start=startGrid(y,m),cells=[],zoom=Math.max(0,Math.min(4,state.monthZoom??(state.monthStyle==='compact'?0:state.monthStyle==='stacked'?1:2))),c=$('#content'),token=`${y}-${m}`,oldToken=renderMonth._token,oldTop=c.scrollTop;
  state.monthZoom=zoom;if(zoom===0)state.monthStyle='compact';else if(zoom===1)state.monthStyle='stacked';else state.monthStyle='detail';
