@@ -37,7 +37,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{border:0;backgrou
 .list{padding:4px 0 90px}.list-date{font-size:14px;color:var(--secondary);padding:15px 18px 7px;margin:0}.list-row{min-height:60px;width:100%;display:grid;grid-template-columns:18px 58px 1fr 18px;align-items:center;padding:7px 16px;border-top:1px solid var(--hairline);text-align:left}.list-row:last-child{border-bottom:1px solid var(--hairline)}.list-dot{width:8px;height:8px;border-radius:50%;background:var(--c)}.list-row.reminder .list-dot{width:13px;height:13px;background:none;border:1.8px solid var(--c)}.list-row.done{opacity:.45}.list-time{font-size:13px;color:var(--secondary)}.list-copy strong{font-size:16px}.list-copy small{display:block;color:var(--secondary);font-size:12px;margin-top:2px}.chev{color:var(--secondary);font-size:20px}
 .popover{position:fixed;z-index:80;width:240px;padding:6px;background:var(--surface);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.22);opacity:0;transform:scale(.94);transform-origin:top right;pointer-events:none;transition:.16s ease}.popover.show{opacity:1;transform:scale(1);pointer-events:auto}.pop-row{height:48px;width:100%;display:grid;grid-template-columns:30px 1fr 22px;align-items:center;text-align:left;padding:0 10px;border-radius:10px;font-size:17px}.pop-row:active{background:var(--group)}.pop-row:disabled{opacity:.35;pointer-events:none}.pop-row .check{color:var(--blue);font-size:20px}.pop-sep{height:1px;background:var(--hairline);margin:4px 8px}.pop-row svg{width:22px;height:22px;stroke:var(--text);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .scrim{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.32);opacity:0;pointer-events:none;transition:.2s}.scrim.show{opacity:1;pointer-events:auto}.sheet{position:fixed;z-index:91;left:50%;bottom:0;width:min(520px,100%);max-height:94dvh;transform:translate(-50%,105%);background:var(--group);border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.18);transition:transform .28s cubic-bezier(.22,.75,.28,1);overflow:hidden}.sheet.show{transform:translate(-50%,0)}.sheet-head{height:58px;display:grid;grid-template-columns:86px 1fr 86px;align-items:center;padding:0 14px;background:color-mix(in srgb,var(--group) 92%,transparent);border-bottom:1px solid var(--hairline)}.sheet-title{text-align:center;font-size:17px;font-weight:600}.sheet-head button{height:44px;color:var(--blue);font-size:17px}.sheet-head .left{text-align:left}.sheet-head .right{text-align:right;font-weight:600}.sheet-body{overflow:auto;max-height:calc(94dvh - 58px);padding:14px 16px calc(30px + env(safe-area-inset-bottom))}.seg{height:36px;background:var(--tertiary);border-radius:9px;padding:2px;display:grid;grid-template-columns:1fr 1fr;margin-bottom:18px}.seg button{border-radius:7px;font-size:15px}.seg button.active{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.18)}.form-group{background:var(--surface);border-radius:12px;margin-bottom:16px;overflow:hidden}.title-group{padding:4px 14px}.title-group input{width:100%;height:58px;border:0;outline:0;background:transparent;font-size:20px}.title-group input+input{border-top:1px solid var(--hairline);font-size:17px}.toggle{width:51px;height:31px;border-radius:16px;background:var(--tertiary);padding:2px;transition:.18s}.toggle i{display:block;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:.18s}.toggle.on{background:var(--green)}.toggle.on i{transform:translateX(20px)}.danger{color:var(--red)!important;text-align:center;display:block;width:100%;height:50px;font-size:17px}.hint{color:var(--secondary);font-size:12px;padding:0 14px 12px;line-height:1.4}.suggestions{display:flex;gap:8px;overflow:auto;padding:0 0 12px;scrollbar-width:none}.suggestion{white-space:nowrap;padding:8px 12px;border-radius:18px;background:var(--surface);color:var(--blue);font-size:14px}
-.calendar-section-title{font-size:13px;color:var(--secondary);padding:12px 12px 6px}.cal-group{background:var(--surface);border-radius:12px;overflow:hidden;margin-bottom:14px}.cal-row{height:52px;display:grid;grid-template-columns:34px 1fr 34px;align-items:center;padding:0 12px;border-top:1px solid var(--hairline)}.cal-row:first-child{border-top:0}.cal-check{width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;font-weight:700}.cal-name{text-align:left;font-size:17px}.cal-name small{display:block;color:var(--secondary);font-size:12px}.info{color:var(--blue);font-size:22px}.settings-row{background:var(--surface);border-radius:12px;overflow:hidden}.settings-row .row button{color:var(--blue)}
+.calendar-section-title{font-size:13px;color:var(--secondary);padding:12px 12px 6px}.cal-group{background:var(--surface);border-radius:12px;overflow:hidden;margin-bottom:14px}.settings-row{background:var(--surface);border-radius:12px;overflow:hidden}.settings-row .row button{color:var(--blue)}
 .search-wrap{padding:0 0 10px}.searchbox{height:38px;border-radius:10px;background:color-mix(in srgb,var(--secondary) 17%,transparent);display:flex;align-items:center;padding:0 10px;gap:8px}.searchbox input{border:0;outline:0;background:transparent;width:100%;font-size:16px}.search-results{margin-top:12px;background:var(--surface);border-radius:12px;overflow:hidden}.empty{padding:70px 20px;color:var(--secondary);text-align:center}
 .toast{position:fixed;z-index:200;left:50%;bottom:calc(var(--bottom-h) + env(safe-area-inset-bottom) + 18px);transform:translate(-50%,12px);background:rgba(30,30,30,.86);color:#fff;padding:9px 14px;border-radius:18px;font-size:13px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media (max-width:360px){.month-title{font-size:32px}.nav{padding-left:10px;padding-right:10px}.event-chip{font-size:9px}}
@@ -67,7 +67,7 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .popover{width:232px;padding:5px;border-radius:13px;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:saturate(180%) blur(26px);-webkit-backdrop-filter:saturate(180%) blur(26px);box-shadow:0 14px 38px rgba(0,0,0,.18),0 1px 1px rgba(0,0,0,.08);transform:scale(.97) translateY(-2px);transition:opacity .14s ease,transform .18s cubic-bezier(.2,.75,.25,1)}.popover.show{transform:scale(1) translateY(0)}.pop-row{height:44px;grid-template-columns:29px 1fr 20px;padding:0 9px;border-radius:9px;font-size:16px}.pop-row .check{font-size:18px}.pop-row svg{width:21px;height:21px;stroke-width:1.75}
 .scrim{background:rgba(0,0,0,.28);transition:opacity .20s ease}.sheet{width:min(430px,100%);max-height:94dvh;border-radius:22px 22px 0 0;background:var(--group);box-shadow:0 -2px 18px rgba(0,0,0,.11),0 -14px 48px rgba(0,0,0,.09);transition:transform .42s cubic-bezier(.18,.89,.32,1.08)}.sheet-head{height:56px;grid-template-columns:92px 1fr 92px;padding:0 16px;background:color-mix(in srgb,var(--group) 96%,transparent);border-bottom:.5px solid var(--hairline)}.sheet-title{font-size:17px;font-weight:600}.sheet-head button{height:44px;font-size:17px}.sheet-head .right{font-weight:600}.sheet-body{max-height:calc(94dvh - 56px);padding:14px 16px calc(24px + env(safe-area-inset-bottom))}
 .seg{height:32px;border-radius:8px;padding:2px;background:rgba(118,118,128,.22);margin:0 0 16px}.seg button{border-radius:6px;font-size:14px;font-weight:500}.seg button.active{background:var(--surface);box-shadow:0 .5px 2px rgba(0,0,0,.17),0 0 0 .5px rgba(0,0,0,.03)}
-.form-group{border-radius:11px;margin-bottom:14px}.title-group{padding:2px 14px}.title-group input{height:54px;font-size:19px}.title-group input+input{border-top:.5px solid var(--hairline);font-size:16.5px}.toggle{width:51px;height:31px;border-radius:16px;padding:2px;background:#e9e9ea}.toggle i{width:27px;height:27px;box-shadow:0 1px 2.5px rgba(0,0,0,.3);transition:transform .20s cubic-bezier(.25,.1,.25,1)}.toggle.on{background:var(--green)}.danger{height:47px;font-size:16.5px}.calendar-section-title{font-size:12.5px;padding:10px 14px 5px}.cal-group{border-radius:11px;margin-bottom:13px}.cal-row{height:49px;grid-template-columns:32px 1fr 32px;padding:0 12px;border-top:.5px solid var(--hairline)}.cal-check{width:22px;height:22px;font-size:13px}.cal-name{font-size:16.5px}.cal-name small{font-size:11.5px}.info{font-size:21px}
+.form-group{border-radius:11px;margin-bottom:14px}.title-group{padding:2px 14px}.title-group input{height:54px;font-size:19px}.title-group input+input{border-top:.5px solid var(--hairline);font-size:16.5px}.toggle{width:51px;height:31px;border-radius:16px;padding:2px;background:#e9e9ea}.toggle i{width:27px;height:27px;box-shadow:0 1px 2.5px rgba(0,0,0,.3);transition:transform .20s cubic-bezier(.25,.1,.25,1)}.toggle.on{background:var(--green)}.danger{height:47px;font-size:16.5px}.calendar-section-title{font-size:12.5px;padding:10px 14px 5px}.cal-group{border-radius:11px;margin-bottom:13px}
 .searchbox{height:36px;border-radius:9px;background:rgba(118,118,128,.12)}.searchbox input{font-size:16px}.search-results{border-radius:11px}.toast{font-size:13px;padding:8px 13px;border-radius:17px;transition:opacity .18s ease,transform .18s ease}
 @media (max-width:380px){.month-title{font-size:32px}.day-number{font-size:15.5px}.event-chip{font-size:9px}.nav{padding-left:8px;padding-right:8px}.bottom button{min-width:82px}}
 
@@ -177,7 +177,7 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 
 .detail-hero{padding:13px 14px 14px}.detail-heading{display:grid;grid-template-columns:13px 1fr;gap:9px;align-items:start}.detail-color{width:11px;height:11px;border-radius:50%;margin-top:7px;background:var(--c)}.detail-title{font-size:22px;line-height:27px;font-weight:700;letter-spacing:-.35px}.detail-when{font-size:15px;line-height:20px;color:var(--secondary);margin-top:4px}.detail-link{display:block;max-width:240px;color:var(--blue);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
 
-.cal-check{width:22px;height:22px;font-size:13px;border-radius:50%;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.04)}.cal-row{height:49px}.cal-name{font-size:16.5px}.info{font-size:21px}
+
 .year-grid{padding:12px 12px 80px;gap:25px 15px}.year-month h3{font-size:16px;font-weight:600}.mini-days{font-size:8.5px}.mini-days span{height:12px}
 .list-row{min-height:52px}.list-dot{width:6px;height:6px}.list-row.reminder .list-dot{width:12px;height:12px;border-width:1.5px}
 @media (prefers-color-scheme:dark){.toggle{background:#39393d}.suggestion{background:rgba(118,118,128,.24);border-color:rgba(84,84,88,.45)}.searchbox{background:rgba(118,118,128,.24)}}
@@ -486,6 +486,49 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 }
 .map-preview iframe{width:100%;height:100%;border:0;display:block;background:var(--group)}
 
+.calendar-section-title{font-size:12.5px;color:var(--secondary);padding:10px 14px 5px}
+.cal-group{background:var(--surface);border-radius:11px;overflow:hidden;margin-bottom:13px}
+.cal-row{
+  height:49px;
+  display:grid;
+  grid-template-columns:32px minmax(0,1fr);
+  align-items:center;
+  min-width:0;
+  padding:0 12px;
+  border-top:.5px solid var(--hairline);
+  background:var(--surface);
+}
+.cal-row:first-child{border-top:0}
+.cal-check{
+  width:22px;
+  height:22px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--c);
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  box-shadow:inset 0 0 0 .5px rgba(0,0,0,.04);
+}
+.cal-name{
+  width:100%;
+  min-width:0;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:left;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size:16.5px;
+}
+.cal-name small{display:block;color:var(--secondary);font-size:11.5px;line-height:14px}
+.info{color:var(--blue);font-size:21px}
+.settings-row{background:var(--surface);border-radius:12px;overflow:hidden}
+.settings-row .row button{color:var(--blue)}
+
 .cal-swipe{
   position:relative;
   overflow:hidden;
@@ -497,14 +540,12 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
   position:relative;
   z-index:2;
   border-top:0;
-  grid-template-columns:32px minmax(0,1fr);
-  background:var(--surface);
   will-change:transform;
-  transition:transform .22s cubic-bezier(.25,.8,.25,1),background-color .10s ease;
+  transition:transform .22s cubic-bezier(.25,.8,.25,1);
   touch-action:pan-y;
+  cursor:default;
 }
 .cal-swipe.open .cal-row{transform:translateX(var(--reveal,-144px))}
-.cal-swipe .cal-row:active{background:var(--tap)}
 .cal-actions{
   position:absolute;
   z-index:1;
@@ -523,15 +564,6 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 }
 .cal-action.edit,.cal-action.detail{background:#007aff}
 .cal-action.delete{background:#ff3b30}
-.cal-name{
-  width:100%;
-  min-width:0;
-  height:100%;
-  text-align:left;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
 .calendar-add-row{
   width:100%;
   min-height:49px;
@@ -849,23 +881,18 @@ function bindCalendarSwipes(root=$('#sheetBody')){
    tracking=false;axis=null;pid=null;front.style.removeProperty('transition');s.style.setProperty('--reveal',`-${max}px`);s.classList.toggle('open',open);front.style.removeProperty('transform')
   };
   front.addEventListener('pointerup',finish);front.addEventListener('pointercancel',finish);
-  front.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('[data-toggle-cal]')){e.preventDefault();openCalendarInfo(s.dataset.calSwipe)}});
   front.addEventListener('click',e=>{
-   if(s.dataset.suppressClick==='1'){delete s.dataset.suppressClick;e.preventDefault();e.stopPropagation();return}
-   if(e.target.closest('[data-toggle-cal]'))return;
-   if(s.classList.contains('open')){closeRow(s);e.preventDefault();return}
-   const id=s.dataset.calSwipe;if(id)openCalendarInfo(id)
+   if(s.dataset.suppressClick==='1'){delete s.dataset.suppressClick;e.preventDefault();e.stopPropagation()}
   })
  });
 }
 function openCalendars(){
  const groups={};state.calendars.forEach(c=>(groups[c.account]??=[]).push(c));
- const rowHtml=c=>`<div class="cal-swipe" data-cal-swipe="${c.id}"><div class="cal-actions">${c.readonly?`<button class="cal-action detail" data-cal-detail="${c.id}">詳細</button>`:`<button class="cal-action edit" data-cal-edit="${c.id}">編集</button><button class="cal-action delete" data-cal-delete="${c.id}">削除</button>`}</div><div class="cal-row" style="--c:${c.color}" role="button" tabindex="0" aria-label="${esc(c.name)}の詳細"><button class="cal-check" data-toggle-cal="${c.id}" aria-label="${esc(c.name)}を${c.visible?'非表示':'表示'}">${c.visible?'✓':''}</button><button class="cal-name" data-cal-open="${c.id}">${esc(c.name)}${c.readonly?'<small>共有元</small>':''}</button></div></div>`;
+ const rowHtml=c=>`<div class="cal-swipe" data-cal-swipe="${c.id}"><div class="cal-actions">${c.readonly?`<button class="cal-action detail" data-cal-detail="${c.id}">詳細</button>`:`<button class="cal-action edit" data-cal-edit="${c.id}">編集</button><button class="cal-action delete" data-cal-delete="${c.id}">削除</button>`}</div><div class="cal-row" style="--c:${c.color}"><button class="cal-check" data-toggle-cal="${c.id}" aria-label="${esc(c.name)}を${c.visible?'非表示':'表示'}">${c.visible?'✓':''}</button><span class="cal-name">${esc(c.name)}${c.readonly?'<small>共有元</small>':''}</span></div></div>`;
  showSheet('カレンダー',`${Object.entries(groups).map(([a,cals])=>`<div class="calendar-section-title">${esc(a)}</div><div class="cal-group">${cals.map(rowHtml).join('')}</div>`).join('')}<div class="calendar-section-title">その他</div><div class="cal-group"><div class="cal-row" style="--c:var(--blue)"><button class="cal-check" id="remToggle">${state.remindersVisible?'✓':''}</button><button class="cal-name" id="remToggle2">日時設定ありリマインダー</button><span></span></div></div><div class="settings-row"><div class="row"><span>設定</span><button id="openSettings">設定 ›</button></div></div><div style="margin-top:14px"><button class="calendar-add-row" id="addCalendarBtn">＋ カレンダーを追加</button></div>`,{primary:{label:'完了',disabled:false,run:closeSheet}});
  /* Header has only Cancel / Calendar / Done. Calendar creation lives only in the bottom add row. */
  $$('[data-toggle-cal]').forEach(b=>b.onclick=e=>{e.stopPropagation();const swipe=b.closest('[data-cal-swipe]');if(swipe?.dataset.suppressClick==='1'){delete swipe.dataset.suppressClick;e.preventDefault();return}if(swipe?.classList.contains('open')){swipe.classList.remove('open');return}const c=getCal(b.dataset.toggleCal);c.visible=!c.visible;save();openCalendars();render()});
  const tr=()=>{state.remindersVisible=!state.remindersVisible;save();openCalendars();render()};$('#remToggle').onclick=tr;$('#remToggle2').onclick=tr;
- $$('[data-cal-open]').forEach(b=>b.onclick=e=>{e.stopPropagation();const swipe=b.closest('[data-cal-swipe]');if(swipe?.dataset.suppressClick==='1'){delete swipe.dataset.suppressClick;return}openCalendarInfo(b.dataset.calOpen)});
  $$('[data-cal-edit]').forEach(b=>b.onclick=e=>{e.stopPropagation();openCalendarInfo(b.dataset.calEdit)});
  $$('[data-cal-detail]').forEach(b=>b.onclick=e=>{e.stopPropagation();openCalendarInfo(b.dataset.calDetail)});
  $$('[data-cal-delete]').forEach(b=>b.onclick=e=>{e.stopPropagation();confirmCalendarDelete(b.dataset.calDelete,openCalendars)});
