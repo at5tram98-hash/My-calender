@@ -283,6 +283,7 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
   color:var(--text);
   z-index:2;
   touch-action:none;
+  transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .16s ease,opacity .12s ease,filter .12s ease;
 }
 .event-block .event-copy{display:block;width:100%;min-width:0;overflow:hidden}
 .event-block strong{
@@ -340,7 +341,6 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .detail-reminder-check::after{width:10px;height:5.5px;border-width:2px}
 
 /* Long press has a visible anticipation phase, then a lifted drag phase. */
-.event-block{transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .16s ease,opacity .12s ease,filter .12s ease}
 .event-block.pressing{transform:scale(1.012);filter:brightness(.985);box-shadow:0 2px 7px rgba(0,0,0,.08);z-index:8}
 .event-block.dragging{opacity:.98;transform:scale(1.045) translateY(-3px);filter:none;box-shadow:0 11px 28px rgba(0,0,0,.23),0 2px 6px rgba(0,0,0,.12);z-index:14;transition:transform .14s cubic-bezier(.2,.9,.2,1),box-shadow .14s ease}
 
@@ -486,18 +486,25 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 }
 .map-preview iframe{width:100%;height:100%;border:0;display:block;background:var(--group)}
 
-.cal-swipe{position:relative;overflow:hidden;background:var(--surface);touch-action:pan-y}
+.cal-swipe{
+  position:relative;
+  overflow:hidden;
+  background:var(--surface);
+  touch-action:pan-y;
+}
 .cal-swipe + .cal-swipe{border-top:.5px solid var(--hairline)}
 .cal-swipe .cal-row{
   position:relative;
   z-index:2;
   border-top:0;
+  grid-template-columns:32px minmax(0,1fr) 28px;
   background:var(--surface);
   will-change:transform;
-  transition:transform .22s cubic-bezier(.25,.8,.25,1);
+  transition:transform .22s cubic-bezier(.25,.8,.25,1),background-color .10s ease;
   touch-action:pan-y;
 }
 .cal-swipe.open .cal-row{transform:translateX(var(--reveal,-144px))}
+.cal-swipe .cal-row:active{background:var(--tap)}
 .cal-actions{
   position:absolute;
   z-index:1;
@@ -512,10 +519,29 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
   font-weight:500;
   display:grid;
   place-items:center;
+  touch-action:manipulation;
 }
-.cal-action.edit{background:#007aff}
+.cal-action.edit,.cal-action.detail{background:#007aff}
 .cal-action.delete{background:#ff3b30}
-.cal-row-tail{color:var(--tertiary);font-size:18px;text-align:right;padding-right:2px}
+.cal-name{
+  width:100%;
+  min-width:0;
+  height:100%;
+  text-align:left;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.cal-row-tail{
+  width:28px;
+  height:100%;
+  display:grid;
+  place-items:center end;
+  color:var(--tertiary);
+  font-size:18px;
+  text-align:right;
+  padding-right:2px;
+}
 .calendar-add-row{
   width:100%;
   min-height:49px;
@@ -527,7 +553,25 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
   border-radius:11px;
 }
 .calendar-add-row:active{background:var(--tap);opacity:1}
-
+.detail-location-control{
+  justify-self:end;
+  min-width:0;
+  max-width:265px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+}
+.detail-location-control .detail-row-value{
+  min-width:0;
+  max-width:190px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.detail-location-control .toggle{flex:0 0 51px}
+.detail-map-group{overflow:hidden;transition:opacity .16s ease,transform .20s cubic-bezier(.25,.8,.25,1)}
+.detail-map-group[hidden]{display:none}
 @media (prefers-color-scheme:dark){
     .map-preview{background:#1c1c1e}
 }
@@ -746,25 +790,88 @@ function openEditor(p={},id=null,initialKind='event'){
  }
  draw()
 }
-function openDetail(id){const e=state.events.find(x=>x.id===id);if(!e)return;const c=getCal(e.calendarId),d=parse(e.date),map=e.location?`<div class="map-preview"><iframe title="${esc(e.location)}の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(e.location)}&output=embed"></iframe></div>`:'';const edit=()=>{closeSheet();setTimeout(()=>openEditor({},id,e.type),260)};const reminder=e.type==='reminder';showSheet(e.type==='event'?'予定':'リマインダー',`<div class="form-group detail-hero"><div class="detail-heading ${reminder?'reminder-heading':''}">${reminder?reminderCheck(e,'detail-reminder-check'):`<span class="detail-color" style="--c:${color(e)}"></span>`}<div><div class="detail-title ${e.completed?'done':''}">${esc(e.title)}</div><div class="detail-when">${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 ${e.allDay?'終日':e.type==='reminder'?fmt(e.start):`${fmt(e.start)}–${fmt(e.end)}`}</div></div></div></div><div class="form-group">${e.location?`<div class="row"><span>場所</span><span class="value detail-row-value">${esc(e.location)}</span></div>${map}`:''}${e.travel&&e.travel!=='なし'?`<div class="row"><span>移動時間</span><span class="value detail-row-value">${esc(e.travel)}</span></div>`:''}<div class="row"><span>${e.type==='event'?'カレンダー':'リスト'}</span><span class="value detail-row-value" style="color:${c.color}">● ${esc(c.name)}</span></div>${e.repeat&&e.repeat!=='しない'?`<div class="row"><span>繰り返し</span><span class="value detail-row-value">${esc(e.repeat)}</span></div>`:''}${e.alert?`<div class="row"><span>通知</span><span class="value detail-row-value">${esc(e.alert)}</span></div>`:''}${e.timezone?`<div class="row"><span>時間帯</span><span class="value detail-row-value">${esc(timezoneLabel(e.timezone))}</span></div>`:''}${e.notes?`<div class="row"><span>メモ</span><span class="value detail-row-value">${esc(e.notes)}</span></div>`:''}</div>`,{kind:'detail',cancelLabel:'完了',primary:{label:'編集',disabled:false,run:edit}});if(reminder){const check=$('[data-reminder-toggle]',$('#sheet'));check?.addEventListener('click',ev=>{ev.stopPropagation();e.completed=!e.completed;save();render();check.classList.toggle('checked',e.completed);check.setAttribute('aria-checked',e.completed?'true':'false');$('.detail-title',$('#sheet'))?.classList.toggle('done',e.completed);toast(e.completed?'実行済みにしました':'未完了に戻しました')})}}
+function openDetail(id){
+ const e=state.events.find(x=>x.id===id);if(!e)return;
+ const c=getCal(e.calendarId),d=parse(e.date);
+ const map=e.location?`<div class="map-preview"><iframe title="${esc(e.location)}の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(e.location)}&output=embed"></iframe></div>`:'';
+ const edit=()=>{closeSheet();setTimeout(()=>openEditor({},id,e.type),260)};
+ const reminder=e.type==='reminder';
+ const locationRow=e.location?`<div class="row"><span>場所</span><span class="detail-location-control"><span class="value detail-row-value" id="detailLocationValue">${esc(e.location)}</span><button class="toggle on" id="detailLocationToggle" type="button" role="switch" aria-checked="true" aria-label="場所を非表示"><i></i></button></span></div>`:'';
+ const mapGroup=e.location?`<div class="form-group detail-map-group" id="detailMapGroup">${map}</div>`:'';
+ showSheet(e.type==='event'?'予定':'リマインダー',`<div class="form-group detail-hero"><div class="detail-heading ${reminder?'reminder-heading':''}">${reminder?reminderCheck(e,'detail-reminder-check'):`<span class="detail-color" style="--c:${color(e)}"></span>`}<div><div class="detail-title ${e.completed?'done':''}">${esc(e.title)}</div><div class="detail-when">${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 ${e.allDay?'終日':e.type==='reminder'?fmt(e.start):`${fmt(e.start)}–${fmt(e.end)}`}</div></div></div></div><div class="form-group">${locationRow}${e.travel&&e.travel!=='なし'?`<div class="row"><span>移動時間</span><span class="value detail-row-value">${esc(e.travel)}</span></div>`:''}<div class="row"><span>${e.type==='event'?'カレンダー':'リスト'}</span><span class="value detail-row-value" style="color:${c.color}">● ${esc(c.name)}</span></div>${e.repeat&&e.repeat!=='しない'?`<div class="row"><span>繰り返し</span><span class="value detail-row-value">${esc(e.repeat)}</span></div>`:''}${e.alert?`<div class="row"><span>通知</span><span class="value detail-row-value">${esc(e.alert)}</span></div>`:''}${e.timezone?`<div class="row"><span>時間帯</span><span class="value detail-row-value">${esc(timezoneLabel(e.timezone))}</span></div>`:''}${e.notes?`<div class="row"><span>メモ</span><span class="value detail-row-value">${esc(e.notes)}</span></div>`:''}</div>${mapGroup}`,{kind:'detail',cancelLabel:'完了',primary:{label:'編集',disabled:false,run:edit}});
+ if(e.location){
+  const toggle=$('#detailLocationToggle'),value=$('#detailLocationValue'),group=$('#detailMapGroup');
+  const setLocationVisible=on=>{
+   toggle?.classList.toggle('on',on);
+   toggle?.setAttribute('aria-checked',on?'true':'false');
+   toggle?.setAttribute('aria-label',on?'場所を非表示':'場所を表示');
+   if(value)value.hidden=!on;
+   if(group)group.hidden=!on;
+  };
+  toggle?.addEventListener('click',ev=>{ev.stopPropagation();setLocationVisible(!toggle.classList.contains('on'));vibrate(5)});
+ }
+ if(reminder){const check=$('[data-reminder-toggle]',$('#sheet'));check?.addEventListener('click',ev=>{ev.stopPropagation();e.completed=!e.completed;save();render();check.classList.toggle('checked',e.completed);check.setAttribute('aria-checked',e.completed?'true':'false');$('.detail-title',$('#sheet'))?.classList.toggle('done',e.completed);toast(e.completed?'実行済みにしました':'未完了に戻しました')})}
+}
 function openSearch(){showSheet('検索',`<div class="search-wrap"><div class="searchbox">${icon('search')}<input id="searchInput" type="search" enterkeyhint="search" autocomplete="off" autocapitalize="none" placeholder="予定、場所、参加者、メモ"><button class="search-clear" id="searchClear" aria-label="消去" hidden>×</button></div><div class="search-results" id="searchResults"><div class="search-empty"><span>予定を検索</span></div></div></div>`,{kind:'search'});const input=$('#searchInput'),clear=$('#searchClear'),results=$('#searchResults');let raf=0;const draw=()=>{const q=input.value.trim().toLowerCase();clear.hidden=!q;if(!q){results.innerHTML='<div class="search-empty"><span>予定を検索</span></div>';return}const xs=allVisible().filter(e=>[e.title,e.location,e.attendees,e.notes].some(v=>String(v||'').toLowerCase().includes(q))).sort((a,b)=>a.date.localeCompare(b.date)||a.start-b.start).slice(0,60);results.innerHTML=xs.length?xs.map(e=>{const dt=parse(e.date);return `<button class="search-row ${e.type==='reminder'?'reminder':''} ${e.completed?'done':''}" data-sr="${e.id}" style="--c:${color(e)}">${e.type==='reminder'?reminderCheck(e):'<span class="search-marker"></span>'}<span class="search-main"><strong>${esc(e.title)}</strong><small>${dt.getMonth()+1}月${dt.getDate()}日・${'日月火水木金土'[dt.getDay()]}${e.location?` · ${esc(e.location)}`:''}</small></span><span class="search-time">${e.allDay?'終日':fmt(e.start)}</span></button>`}).join(''):'<div class="search-empty"><span>該当する予定はありません</span></div>';$$('[data-sr]',results).forEach(b=>b.onclick=ev=>{if(ev.target.closest('[data-reminder-toggle]')){const e=state.events.find(x=>x.id===b.dataset.sr);if(e){e.completed=!e.completed;save();render();b.classList.toggle('done',e.completed);const ck=$('[data-reminder-toggle]',b);ck?.classList.toggle('checked',e.completed);ck?.setAttribute('aria-checked',e.completed?'true':'false');toast(e.completed?'実行済みにしました':'未完了に戻しました')}return}closeSheet();setTimeout(()=>openDetail(b.dataset.sr),260)})};input.oninput=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)};clear.onclick=()=>{input.value='';draw();input.focus()};setTimeout(()=>input.focus(),280)}
 function confirmCalendarDelete(id,after){const c=state.calendars.find(x=>x.id===id);if(!c||c.readonly)return;const ok=confirm(`「${c.name}」カレンダーを削除しますか？\nこのカレンダー内の予定も削除されます。`);if(!ok)return;state.events=state.events.filter(e=>e.calendarId!==id);state.calendars=state.calendars.filter(x=>x.id!==id);save();render();toast('カレンダーを削除しました');after?.()}
 function bindCalendarSwipes(root=$('#sheetBody')){
- const rows=$$('[data-cal-swipe]',root);const closeAll=except=>rows.forEach(s=>{if(s!==except){s.classList.remove('open');s.style.removeProperty('--reveal');$('.cal-row',s)?.style.removeProperty('transform')}});
- rows.forEach(s=>{const front=$('.cal-row',s),actions=$('.cal-actions',s),max=actions?.offsetWidth||72;let startX=0,startY=0,dx=0,tracking=false,horizontal=false;
-  front.addEventListener('pointerdown',e=>{closeAll(s);startX=e.clientX;startY=e.clientY;dx=0;tracking=true;horizontal=false;front.style.transition='none'});
-  front.addEventListener('pointermove',e=>{if(!tracking)return;const x=e.clientX-startX,y=e.clientY-startY;if(!horizontal&&Math.hypot(x,y)>8){if(Math.abs(y)>Math.abs(x)){tracking=false;front.style.removeProperty('transition');return}horizontal=true}s.dataset.suppress=horizontal?'1':'';if(!horizontal)return;dx=Math.max(-max,Math.min(0,x+(s.classList.contains('open')?-max:0)));front.style.transform=`translateX(${dx}px)`;e.preventDefault()});
-  const finish=()=>{if(!tracking&&!horizontal)return;tracking=false;front.style.removeProperty('transition');const open=horizontal?(Math.abs(dx)>max*.38):s.classList.contains('open');s.classList.toggle('open',open);s.style.setProperty('--reveal',`-${max}px`);front.style.removeProperty('transform');setTimeout(()=>delete s.dataset.suppress,0)};
-  front.addEventListener('pointerup',finish);front.addEventListener('pointercancel',finish)
+ const rows=$$('[data-cal-swipe]',root);
+ const closeRow=s=>{if(!s)return;s.classList.remove('open');s.style.removeProperty('--reveal');$('.cal-row',s)?.style.removeProperty('transform')};
+ const closeAll=except=>rows.forEach(s=>{if(s!==except)closeRow(s)});
+ rows.forEach(s=>{
+  const front=$('.cal-row',s),actions=$('.cal-actions',s);if(!front||!actions)return;
+  const max=Math.max(72,actions.scrollWidth||actions.offsetWidth||72);
+  let startX=0,startY=0,base=0,current=0,tracking=false,axis=null,pid=null;
+  const stop=()=>{tracking=false;axis=null;pid=null;front.style.removeProperty('transition');front.style.removeProperty('transform')};
+  front.addEventListener('pointerdown',e=>{
+   if(e.button!=null&&e.button!==0)return;
+   closeAll(s);pid=e.pointerId;startX=e.clientX;startY=e.clientY;base=s.classList.contains('open')?-max:0;current=base;tracking=true;axis=null;front.style.transition='none'
+  });
+  front.addEventListener('pointermove',e=>{
+   if(!tracking||e.pointerId!==pid)return;
+   const mx=e.clientX-startX,my=e.clientY-startY;
+   if(!axis&&Math.hypot(mx,my)>7){axis=Math.abs(mx)>Math.abs(my)*1.12?'x':'y';if(axis==='y'){stop();return}try{front.setPointerCapture?.(pid)}catch{}}
+   if(axis!=='x')return;
+   current=Math.max(-max,Math.min(0,base+mx));front.style.transform=`translateX(${current}px)`;e.preventDefault()
+  },{passive:false});
+  const finish=e=>{
+   if(!tracking||e.pointerId!==pid){stop();return}
+   const wasHorizontal=axis==='x',open=wasHorizontal?Math.abs(current)>max*.36:s.classList.contains('open');
+   if(wasHorizontal){s.dataset.suppressClick='1';setTimeout(()=>{if(s.dataset.suppressClick==='1')delete s.dataset.suppressClick},420)}
+   tracking=false;axis=null;pid=null;front.style.removeProperty('transition');s.style.setProperty('--reveal',`-${max}px`);s.classList.toggle('open',open);front.style.removeProperty('transform')
+  };
+  front.addEventListener('pointerup',finish);front.addEventListener('pointercancel',finish);
+  front.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('[data-toggle-cal]')){e.preventDefault();openCalendarInfo(s.dataset.calSwipe)}});
+  front.addEventListener('click',e=>{
+   if(s.dataset.suppressClick==='1'){delete s.dataset.suppressClick;e.preventDefault();e.stopPropagation();return}
+   if(e.target.closest('[data-toggle-cal]'))return;
+   if(s.classList.contains('open')){closeRow(s);e.preventDefault();return}
+   const id=s.dataset.calSwipe;if(id)openCalendarInfo(id)
+  })
  });
 }
-function openCalendars(){const groups={};state.calendars.forEach(c=>(groups[c.account]??=[]).push(c));const rowHtml=c=>`<div class="cal-swipe" data-cal-swipe="${c.id}"><div class="cal-actions"><button class="cal-action edit" data-cal-edit="${c.id}">編集</button>${c.readonly?'':`<button class="cal-action delete" data-cal-delete="${c.id}">削除</button>`}</div><div class="cal-row" style="--c:${c.color}"><button class="cal-check" data-toggle-cal="${c.id}">${c.visible?'✓':''}</button><button class="cal-name" data-toggle-cal="${c.id}">${esc(c.name)}${c.readonly?'<small>共有元</small>':''}</button><span class="cal-row-tail">›</span></div></div>`;showSheet('カレンダー',`${Object.entries(groups).map(([a,cals])=>`<div class="calendar-section-title">${esc(a)}</div><div class="cal-group">${cals.map(rowHtml).join('')}</div>`).join('')}<div class="calendar-section-title">その他</div><div class="cal-group"><div class="cal-row" style="--c:var(--blue)"><button class="cal-check" id="remToggle">${state.remindersVisible?'✓':''}</button><button class="cal-name" id="remToggle2">日時設定ありリマインダー</button><span></span></div></div><div class="settings-row"><div class="row"><span>設定</span><button id="openSettings">設定 ›</button></div></div><div style="margin-top:14px"><button class="calendar-add-row" id="addCalendarBtn">＋ カレンダーを追加</button></div>`,{primary:{label:'完了',disabled:false,run:closeSheet}});
- $$('[data-toggle-cal]').forEach(b=>b.onclick=e=>{const swipe=b.closest('[data-cal-swipe]');if(swipe?.dataset.suppress==='1'||swipe?.classList.contains('open')){e.preventDefault();return}const c=getCal(b.dataset.toggleCal);c.visible=!c.visible;save();openCalendars();render()});
+function openCalendars(){
+ const groups={};state.calendars.forEach(c=>(groups[c.account]??=[]).push(c));
+ const rowHtml=c=>`<div class="cal-swipe" data-cal-swipe="${c.id}"><div class="cal-actions">${c.readonly?`<button class="cal-action detail" data-cal-detail="${c.id}">詳細</button>`:`<button class="cal-action edit" data-cal-edit="${c.id}">編集</button><button class="cal-action delete" data-cal-delete="${c.id}">削除</button>`}</div><div class="cal-row" style="--c:${c.color}" role="button" tabindex="0" aria-label="${esc(c.name)}の詳細"><button class="cal-check" data-toggle-cal="${c.id}" aria-label="${esc(c.name)}を${c.visible?'非表示':'表示'}">${c.visible?'✓':''}</button><button class="cal-name" data-cal-open="${c.id}">${esc(c.name)}${c.readonly?'<small>共有元</small>':''}</button><span class="cal-row-tail" data-cal-open="${c.id}">›</span></div></div>`;
+ showSheet('カレンダー',`${Object.entries(groups).map(([a,cals])=>`<div class="calendar-section-title">${esc(a)}</div><div class="cal-group">${cals.map(rowHtml).join('')}</div>`).join('')}<div class="calendar-section-title">その他</div><div class="cal-group"><div class="cal-row" style="--c:var(--blue)"><button class="cal-check" id="remToggle">${state.remindersVisible?'✓':''}</button><button class="cal-name" id="remToggle2">日時設定ありリマインダー</button><span></span></div></div><div class="settings-row"><div class="row"><span>設定</span><button id="openSettings">設定 ›</button></div></div><div style="margin-top:14px"><button class="calendar-add-row" id="addCalendarBtn">＋ カレンダーを追加</button></div>`,{primary:{label:'完了',disabled:false,run:closeSheet}});
+ /* Header has only Cancel / Calendar / Done. Calendar creation lives only in the bottom add row. */
+ $$('[data-toggle-cal]').forEach(b=>b.onclick=e=>{e.stopPropagation();const swipe=b.closest('[data-cal-swipe]');if(swipe?.dataset.suppressClick==='1'){delete swipe.dataset.suppressClick;e.preventDefault();return}if(swipe?.classList.contains('open')){swipe.classList.remove('open');return}const c=getCal(b.dataset.toggleCal);c.visible=!c.visible;save();openCalendars();render()});
  const tr=()=>{state.remindersVisible=!state.remindersVisible;save();openCalendars();render()};$('#remToggle').onclick=tr;$('#remToggle2').onclick=tr;
- $$('[data-cal-edit]').forEach(b=>b.onclick=e=>{e.stopPropagation();openCalendarInfo(b.dataset.calEdit)});$$('[data-cal-delete]').forEach(b=>b.onclick=e=>{e.stopPropagation();confirmCalendarDelete(b.dataset.calDelete,openCalendars)});
+ $$('[data-cal-open]').forEach(b=>b.onclick=e=>{e.stopPropagation();const swipe=b.closest('[data-cal-swipe]');if(swipe?.dataset.suppressClick==='1'){delete swipe.dataset.suppressClick;return}openCalendarInfo(b.dataset.calOpen)});
+ $$('[data-cal-edit]').forEach(b=>b.onclick=e=>{e.stopPropagation();openCalendarInfo(b.dataset.calEdit)});
+ $$('[data-cal-detail]').forEach(b=>b.onclick=e=>{e.stopPropagation();openCalendarInfo(b.dataset.calDetail)});
+ $$('[data-cal-delete]').forEach(b=>b.onclick=e=>{e.stopPropagation();confirmCalendarDelete(b.dataset.calDelete,openCalendars)});
  $('#openSettings').onclick=openSettings;$('#addCalendarBtn').onclick=openAddCalendar;bindCalendarSwipes()
 }
-function openCalendarInfo(id){const c=getCal(id);showSheet('カレンダー',`<div class="form-group title-group"><input id="cName" value="${esc(c.name)}" ${c.readonly?'disabled':''}></div><div class="form-group"><div class="row"><span>色</span><input id="cColor" type="color" value="${c.color}" ${c.readonly?'disabled':''}></div><div class="row"><span>アカウント</span><span class="value">${esc(c.account)}</span></div></div>${!c.readonly?`<div class="form-group"><button class="danger" id="deleteCal">カレンダーを削除</button></div>`:''}`,{primary:c.readonly?{label:'完了',disabled:false,run:closeSheet}:{label:'完了',disabled:false,run:()=>{c.name=$('#cName').value||c.name;c.color=$('#cColor').value;save();openCalendars();render()}}});$('#deleteCal')?.addEventListener('click',()=>confirmCalendarDelete(id,openCalendars))}
+function openCalendarInfo(id){
+ const c=getCal(id);
+ if(c.readonly){
+  showSheet('カレンダー',`<div class="form-group detail-hero"><div class="detail-heading"><span class="detail-color" style="--c:${c.color}"></span><div><div class="detail-title">${esc(c.name)}</div><div class="detail-when">読み取り専用</div></div></div></div><div class="form-group"><div class="row"><span>色</span><span class="value"><span style="color:${c.color}">●</span></span></div><div class="row"><span>アカウント</span><span class="value">${esc(c.account)}</span></div><div class="row"><span>アクセス</span><span class="value">共有元・読み取り専用</span></div></div>`,{cancelLabel:'完了',primary:{label:'',disabled:true}});
+  return
+ }
+ showSheet('カレンダー',`<div class="form-group title-group"><input id="cName" value="${esc(c.name)}"></div><div class="form-group"><div class="row"><span>色</span><input id="cColor" type="color" value="${c.color}"></div><div class="row"><span>アカウント</span><span class="value">${esc(c.account)}</span></div></div><div class="form-group"><button class="danger" id="deleteCal">カレンダーを削除</button></div>`,{primary:{label:'完了',disabled:false,run:()=>{c.name=$('#cName').value||c.name;c.color=$('#cColor').value;save();openCalendars();render()}}});
+ $('#deleteCal')?.addEventListener('click',()=>confirmCalendarDelete(id,openCalendars))
+}
 function openAddCalendar(){showSheet('カレンダーを追加',`<div class="form-group title-group"><input id="newCalName" placeholder="カレンダー名"></div><div class="form-group"><div class="row"><span>色</span><input id="newCalColor" type="color" value="#007aff"></div><div class="row"><span>アカウント</span><select id="newCalAccount"><option>iCloud</option><option>Gmail</option><option>その他</option></select></div></div>`,{primary:{label:'追加',disabled:true}});const name=$('#newCalName'),primary=$('#sheetPrimary');const update=()=>{const ok=!!name.value.trim();primary.disabled=!ok;primary.style.opacity=ok?1:.35;primary.onclick=ok?()=>{state.calendars.push({id:`calendar-${uid()}`,account:$('#newCalAccount').value,name:name.value.trim(),color:$('#newCalColor').value,visible:true,chipStyle:'fill'});save();render();openCalendars();toast('カレンダーを追加しました')}:null};name.oninput=update;update();setTimeout(()=>name.focus(),220)}
 function openSettings(){showSheet('設定',`<div class="calendar-section-title">表示</div><div class="form-group"><div class="row"><span>週の開始曜日</span><select id="weekStart"><option value="0">日曜日</option><option value="1">月曜日</option><option value="6">土曜日</option></select></div><div class="row"><span>時間帯</span><select id="tz">${timezoneOptions(state.timezone)}</select></div><div class="row"><span>新規予定の継続時間</span><select id="dur"><option value="30">30分</option><option value="60">1時間</option><option value="90">1時間30分</option><option value="120">2時間</option></select></div></div><div class="hint">iPhoneではこれらは「設定 ＞ アプリ ＞ カレンダー」で変更します。このWebアプリではここから変更できます。</div>`,{primary:{label:'完了',disabled:false,run:()=>{state.weekStart=+$('select#weekStart').value;state.timezone=$('#tz').value;state.defaultDuration=+$('#dur').value;save();closeSheet();render()}}});$('#weekStart').value=String(state.weekStart);$('#dur').value=String(state.defaultDuration)}
 function openInbox(){showSheet('出席依頼',state.invitations.length?state.invitations.map(i=>`<div class="form-group" style="padding:14px"><strong style="font-size:18px">${esc(i.title)}</strong><div style="color:var(--secondary);margin:5px 0 14px">${esc(i.from)}<br>${esc(i.date)} ${fmt(i.start)}–${fmt(i.end)}</div><div class="seg" style="grid-template-columns:repeat(3,1fr);margin:0"><button data-inv="${i.id}" data-st="declined">欠席</button><button data-inv="${i.id}" data-st="tentative">仮承諾</button><button data-inv="${i.id}" data-st="accepted">出席</button></div></div>`).join(''):'<div class="empty">新しい出席依頼はありません</div>',{primary:{label:'完了',disabled:false,run:closeSheet}});$$('[data-inv]').forEach(b=>b.onclick=()=>{const i=state.invitations.find(x=>x.id===b.dataset.inv);i.status=b.dataset.st;if(i.status==='accepted'&&!state.events.some(e=>e.invitationId===i.id))state.events.push({id:uid(),invitationId:i.id,type:'event',title:i.title,date:i.date,start:i.start,end:i.end,calendarId:'gmail',location:'',repeat:'しない',alert:'なし',timezone:state.timezone,notes:`招待元: ${i.from}`});save();closeSheet();render();toast('返信を保存しました')})}
@@ -797,7 +904,7 @@ function finishPinch(p){if(!p)return;const c=$('#content');c.classList.remove('p
 $('#content').addEventListener('touchstart',e=>{if(e.touches.length!==2)return;const a=e.touches[0],b=e.touches[1],dist=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);swipe=null;const mode=state.view==='month'?'month':state.view==='day'?'day':state.view==='year'?'year':null;if(!mode)return;const p={mode,startDist:dist,startLevel:mode==='month'?(state.monthZoom??2):mode==='day'?(state.dayZoom??1):0,liveLevel:mode==='year'?0:(mode==='month'?(state.monthZoom??2):(state.dayZoom??1))};if(mode==='day'){const scroller=$('.time-scroll'),r=scroller?.getBoundingClientRect();if(scroller&&r){p.centerY=(a.clientY+b.clientY)/2-r.top;p.anchorMinute=(scroller.scrollTop+p.centerY)/currentDayPpm()}}pinch=p;$('#content').classList.add('pinching');if(mode==='month')$('.month-grid')?.classList.add('pinch-live')},{passive:true});
 const endPinch=e=>{if(!e.touches||e.touches.length<2){const p=pinch;pinch=null;if(p)finishPinch(p);else $('#content').classList.remove('pinching')}};
 $('#content').addEventListener('touchend',endPinch,{passive:true});$('#content').addEventListener('touchcancel',()=>{const p=pinch;pinch=null;if(p)finishPinch(p);else $('#content').classList.remove('pinching')},{passive:true});window.addEventListener('touchend',endPinch,{passive:true});window.addEventListener('touchcancel',()=>{const p=pinch;pinch=null;if(p)finishPinch(p)},{passive:true});
-$('#content').addEventListener('touchmove',e=>{if(e.touches.length!==2||!pinch)return;e.preventDefault();const a=e.touches[0],b=e.touches[1],dist=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),ratio=Math.log(dist/pinch.startDist);if(pinch.mode==='month'){pinch.liveLevel=clamp(pinch.startLevel+ratio/.24,-.7,4.7);applyMonthLiveZoom(pinch.liveLevel)}else if(pinch.mode==='day'){pinch.liveLevel=clamp(pinch.startLevel+ratio/.24,-.7,4.25);const ppm=interpStep(DAY_PPM_STEPS,clamp(pinch.liveLevel,0,4));applyDayLivePpm(ppm,pinch)}else if(pinch.mode==='year'){pinch.liveLevel=ratio/.24}},{passive:false});render();
+$('#content').addEventListener('touchmove',e=>{if(e.touches.length!==2||!pinch)return;e.preventDefault();const a=e.touches[0],b=e.touches[1],dist=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),ratio=Math.log(dist/pinch.startDist);if(pinch.mode==='month'){pinch.liveLevel=clamp(pinch.startLevel+ratio/.24,-.7,4.7);applyMonthLiveZoom(pinch.liveLevel)}else if(pinch.mode==='day'){pinch.liveLevel=clamp(pinch.startLevel+ratio/.24,-.7,4.25);const ppm=interpStep(DAY_PPM_STEPS,clamp(pinch.liveLevel,0,4));applyDayLivePpm(ppm,pinch)}else if(pinch.mode==='year'){pinch.liveLevel=ratio/.24}},{passive:false});render();setTimeout(openCalendars,50);
 })();
 </script>
 </body>
