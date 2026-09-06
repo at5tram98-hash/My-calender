@@ -55,7 +55,7 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .nav-top{height:44px}.left-nav,.right-nav{gap:0}.nav-btn{width:42px;height:42px;border-radius:21px}.back-btn{height:42px;max-width:190px;gap:0;font-size:17px;font-weight:400;padding:0 7px 0 0;border-radius:21px}.back-btn svg{margin-left:-3px}.nav svg{width:25px;height:25px;stroke-width:1.9}.month-title{font-size:34px;font-weight:700;letter-spacing:-.85px;line-height:40px;margin:3px 0 0 4px}.weekdays{height:28px;font-size:11px;font-weight:600;color:var(--secondary);letter-spacing:.02em}
 
 .bottom{height:calc(var(--bottom-h) + env(safe-area-inset-bottom));padding:0 8px env(safe-area-inset-bottom);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);border-top:.5px solid var(--hairline)}.bottom button{height:44px;min-width:90px;border-radius:12px;font-size:16px;font-weight:400;gap:4px}.bottom .bottom-center{font-weight:500}.bottom svg{width:21px;height:21px;stroke-width:1.9}
-.month-grid{min-height:100%;height:100%;grid-template-rows:repeat(6,minmax(0,1fr));border-top:.5px solid var(--hairline)}.month-grid.zoom-3{height:auto;min-height:calc(100% + 190px);grid-template-rows:repeat(6,minmax(116px,1fr))}.month-grid.zoom-4{height:auto;min-height:calc(100% + 420px);grid-template-rows:repeat(6,minmax(154px,1fr))}
+.month-grid{min-height:100%;height:100%;grid-template-rows:repeat(6,minmax(0,1fr));border-top:.5px solid var(--hairline)}.month-grid.zoom-3{height:auto;min-height:calc(100% + 190px);grid-template-rows:repeat(6,minmax(132px,1fr))}.month-grid.zoom-4{height:auto;min-height:calc(100% + 420px);grid-template-rows:repeat(6,minmax(176px,1fr))}
 .day-cell{border-bottom:.5px solid var(--hairline);padding:3px 2px 2px}.day-number{height:25px;min-width:25px;padding:0 3px;border-radius:13px;margin:0 auto 2px;font-size:16px;font-weight:500;line-height:25px}.today .day-number{font-weight:600}.selected:not(.today) .day-number{background:transparent;color:var(--text)}
 .compact-track{height:7px;gap:2px;padding:0 4px}.compact-dot{width:4px;height:4px;min-width:4px;border-radius:2px;background:var(--c)}.compact-dot.merge{width:calc(4px + (var(--n) - 1) * 5px);border-radius:2px}
 .stack-wrap{gap:2px;padding:0 3px}.stack-bar{height:6px;border-radius:3px;background:color-mix(in srgb,var(--c) 84%,transparent);opacity:1}
@@ -110,8 +110,8 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .month-grid.zoom-0{--month-row-min:62px}
 .month-grid.zoom-1{--month-row-min:69px}
 .month-grid.zoom-2{--month-row-min:80px}
-.month-grid.zoom-3{--month-row-min:116px}
-.month-grid.zoom-4{--month-row-min:154px}
+.month-grid.zoom-3{--month-row-min:132px}
+.month-grid.zoom-4{--month-row-min:176px}
 .day-cell{padding:2px 2px 1px;contain:layout paint;min-width:0;align-content:start}
 .month-grid.zoom-3 .day-cell,.month-grid.zoom-4 .day-cell{contain:layout;overflow:hidden}
 .day-number{height:25px;min-width:25px;border-radius:12.5px;margin:0 auto 0;font-size:16px;font-weight:500;letter-spacing:-.18px;font-variant-numeric:tabular-nums}
@@ -120,24 +120,34 @@ button{touch-action:manipulation;transition:opacity .10s ease,background-color .
 .compact-dot{width:4px;height:4px;min-width:4px;border-radius:2px}
 .compact-dot.merge{width:calc(4px + (var(--n) - 1) * 4px);border-radius:2px}
 .stack-wrap{gap:1.5px;padding:0 3px;margin-top:0}.stack-bar{height:5.5px;border-radius:2.75px;background:color-mix(in srgb,var(--c) 82%,transparent)}
-.detail-wrap{display:flex;flex-direction:column;gap:0;padding:0;margin-top:-1px;min-width:0;overflow:hidden}
-.event-chip{height:12px;min-height:12px;max-height:12px;width:100%;min-width:0;display:flex;align-items:center;gap:1px;overflow:hidden;font-size:9.25px;line-height:12px;letter-spacing:-.10px;padding:0;border-radius:2px;text-align:left;white-space:nowrap}
-.event-chip .event-label{display:block;flex:1 1 auto;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.event-chip .event-label b{font-size:8.25px;font-weight:500;color:var(--secondary)}
-.event-chip .marker{flex:0 0 7px;width:7px;min-width:7px;font-size:7px;line-height:1;text-align:center}
+.detail-wrap{display:flex;flex-direction:column;gap:1px;padding:0 1px 2px;margin-top:0;min-width:0;overflow:hidden}
+.event-chip{height:13px;min-height:13px;max-height:13px;width:100%;min-width:0;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:2px;overflow:hidden;font-size:9.25px;line-height:13px;letter-spacing:-.10px;padding:0;border-radius:2px;text-align:left;color:var(--text);white-space:nowrap}
+.event-chip.fill{background:color-mix(in srgb,var(--c) 16%,transparent);padding:0 2px}
+.event-chip.icon,.event-chip.star{background:transparent;padding:0 1px}
+.event-chip .event-label{display:flex;flex:1 1 auto;min-width:0;max-width:100%;overflow:hidden;flex-direction:row;align-items:center}
+.event-chip .event-title{display:block;flex:1 1 auto;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);line-height:13px}
+.event-chip .event-time{display:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+.chip-symbol{flex:0 0 auto;display:inline-grid;place-items:center;color:var(--c)}
+.chip-symbol.calendar{position:relative;width:8px;height:8px;border-radius:2px;background:var(--c)}
+.chip-symbol.calendar::before,.chip-symbol.calendar::after{content:"";position:absolute;left:2px;right:2px;height:1px;border-radius:1px;background:#fff}
+.chip-symbol.calendar::before{top:2.25px}.chip-symbol.calendar::after{top:4.75px}
+.chip-symbol.star{width:9px;height:9px}.chip-symbol.star svg{width:9px;height:9px;display:block;fill:currentColor;stroke:none}
+.event-chip.reminder{background:transparent;padding:0 1px;gap:2px}
 .event-chip.reminder .marker{display:none}
-.more{font-size:8.25px;line-height:10px;padding-left:8px;margin-top:0}
-/* High zoom intentionally shows every event name in full. The row grows instead of clipping. */
-.month-grid.zoom-3 .detail-wrap,.month-grid.zoom-4 .detail-wrap{overflow:visible;gap:1px}
-.month-grid.zoom-3 .event-chip,.month-grid.zoom-4 .event-chip{
-  height:auto;min-height:13px;max-height:none;align-items:flex-start;overflow:visible;
-  white-space:normal;line-height:12px;padding:1px 0;
-}
-.month-grid.zoom-3 .event-chip .event-label,.month-grid.zoom-4 .event-chip .event-label{
-  max-width:none;overflow:visible;text-overflow:clip;white-space:normal;overflow-wrap:anywhere;word-break:normal;line-height:12px;
-}
-.month-grid.zoom-4 .event-chip{font-size:9.75px;line-height:13px}
-.month-grid.zoom-4 .event-chip .event-label{line-height:13px}
+.day-cell.has-more .detail-wrap{padding-bottom:12px}
+.more{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);min-width:18px;height:11px;padding:0 4px;border-radius:5.5px;display:grid;place-items:center;background:color-mix(in srgb,var(--secondary) 13%,transparent);color:var(--secondary);font-size:8px;font-weight:600;line-height:11px;text-align:center;font-variant-numeric:tabular-nums;z-index:2}
+/* High zoom mirrors iOS: fill events become title + time; icon/star/reminder stay one line. */
+.month-grid.zoom-3 .detail-wrap,.month-grid.zoom-4 .detail-wrap{overflow:visible;gap:2px;padding-bottom:2px}
+.month-grid.zoom-3 .event-chip.fill,.month-grid.zoom-4 .event-chip.fill{height:28px;min-height:28px;max-height:28px;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;padding:1px 3px;overflow:hidden}
+.month-grid.zoom-4 .event-chip.fill{height:30px;min-height:30px;max-height:30px;padding-top:2px;padding-bottom:2px}
+.month-grid.zoom-3 .event-chip.fill .event-label,.month-grid.zoom-4 .event-chip.fill .event-label{display:block;width:100%;overflow:hidden}
+.month-grid.zoom-3 .event-chip.fill .event-title,.month-grid.zoom-4 .event-chip.fill .event-title{font-size:9.5px;line-height:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.month-grid.zoom-4 .event-chip.fill .event-title{font-size:10px;line-height:13px}
+.month-grid.zoom-3 .event-chip.fill .event-time,.month-grid.zoom-4 .event-chip.fill .event-time{display:block;font-size:8.25px;line-height:10px;font-weight:500;color:var(--c)}
+.month-grid.zoom-4 .event-chip.fill .event-time{font-size:8.75px;line-height:10px}
+.month-grid.zoom-3 .event-chip.icon,.month-grid.zoom-3 .event-chip.star,.month-grid.zoom-3 .event-chip.reminder,.month-grid.zoom-4 .event-chip.icon,.month-grid.zoom-4 .event-chip.star,.month-grid.zoom-4 .event-chip.reminder{height:14px;min-height:14px;max-height:14px;align-items:center;overflow:hidden;white-space:nowrap}
+.month-grid.zoom-4 .event-chip.icon,.month-grid.zoom-4 .event-chip.star,.month-grid.zoom-4 .event-chip.reminder{height:15px;min-height:15px;max-height:15px;font-size:9.75px}
+.month-grid.zoom-3 .event-chip.icon .event-title,.month-grid.zoom-3 .event-chip.star .event-title,.month-grid.zoom-3 .event-chip.reminder .event-title,.month-grid.zoom-4 .event-chip.icon .event-title,.month-grid.zoom-4 .event-chip.star .event-title,.month-grid.zoom-4 .event-chip.reminder .event-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .month-title{font-size:34px;font-weight:700;letter-spacing:-.9px;line-height:40px;margin:3px 0 0 4px}.weekdays{height:28px;font-size:11px;font-weight:600;letter-spacing:.01em}
 
 /* Day zoom is also continuously adjustable while pinching. */
@@ -447,7 +457,7 @@ const icons={
  month:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5M15 4v5"/></svg>',compact:'<svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="8" rx="3"/><path d="M8 11h8"/></svg>',stacked:'<svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="5" rx="2"/><rect x="5" y="14" width="14" height="5" rx="2"/></svg>',detail:'<svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="6" rx="2"/><rect x="5" y="13" width="14" height="6" rx="2"/><path d="M8 8h8M8 16h5"/></svg>',list:'<svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>',day:'<svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="3"/><path d="M8 9h8M8 12h8M8 15h5"/></svg>',multi:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="8" height="14" rx="2"/><rect x="13" y="5" width="8" height="14" rx="2"/></svg>',calendar:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v5M16 2v5"/><path d="M8 13h2M14 13h2M8 17h2M14 17h2"/></svg>',inbox:'<svg viewBox="0 0 24 24"><path d="M4 5h16l2 11H15l-2 3h-2l-2-3H2L4 5Z"/></svg>',gear:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.5-2.4 1a7 7 0 0 0-1.8-1L14.4 3h-4.8L9.3 6a7 7 0 0 0-1.8 1L5 6 3 9.5 5.1 11a7 7 0 0 0 0 2L3 14.5 5 18l2.4-1a7 7 0 0 0 1.8 1l.4 3h4.8l.4-3a7 7 0 0 0 1.8-1l2.4 1 2-3.5-2.1-1.5a7 7 0 0 0 .1-1Z"/></svg>'};
 const icon=n=>icons[n]||'';
 const defaults={view:'month',monthStyle:'detail',monthZoom:2,dayZoom:1,dayStyle:'single',listOrigin:'month',cursor:key(today),selected:key(today),weekStart:0,timezone:'Asia/Tokyo',remindersVisible:true,defaultDuration:60,calendars:[
- {id:'icloud-main',account:'iCloud',name:'個人',color:'#007aff',visible:true},{id:'school',account:'iCloud',name:'学校・授業',color:'#ffcc00',visible:true},{id:'work',account:'iCloud',name:'バイト',color:'#34c759',visible:true},{id:'gmail',account:'Gmail',name:'5pjtm8x6j@gmail.com',color:'#34c759',visible:true},{id:'holidays',account:'Gmail',name:'日本の祝日',color:'#ff9500',visible:true,readonly:true}
+ {id:'icloud-main',account:'iCloud',name:'個人',color:'#007aff',visible:true,chipStyle:'fill'},{id:'school',account:'iCloud',name:'学校・授業',color:'#ffcc00',visible:true,chipStyle:'fill'},{id:'work',account:'iCloud',name:'バイト',color:'#34c759',visible:true,chipStyle:'fill'},{id:'gmail',account:'Gmail',name:'5pjtm8x6j@gmail.com',color:'#34c759',visible:true,chipStyle:'fill'},{id:'holidays',account:'Gmail',name:'日本の祝日',color:'#ff9500',visible:true,readonly:true,chipStyle:'icon'},{id:'holidays-2',account:'Gmail',name:'国民の祝日',color:'#ff9500',visible:true,readonly:true,chipStyle:'star'}
 ],events:[],invitations:[{id:'inv1',title:'ゼミ打ち合わせ',from:'student@example.com',date:key(add(today,4)),start:840,end:900,status:'pending'}]};
 function seed(){const t=key(today),d1=key(add(today,1)),d2=key(add(today,2));return [
 {id:uid(),type:'event',title:'朝食',date:t,start:450,end:480,calendarId:'icloud-main',location:'',repeat:'しない',alert:'なし',timezone:'Asia/Tokyo',notes:''},
@@ -459,7 +469,8 @@ function seed(){const t=key(today),d1=key(add(today,1)),d2=key(add(today,2));ret
 {id:uid(),type:'event',title:'講義資料を読む',date:d2,start:0,end:1440,allDay:true,calendarId:'school',location:'',repeat:'しない',alert:'なし',timezone:'Asia/Tokyo',notes:''}
 ]}
 let state;try{state=JSON.parse(localStorage.getItem('ios18-calendar-web'))||structuredClone(defaults)}catch{state=structuredClone(defaults)}if(!state.events?.length)state.events=seed();if(!Number.isFinite(state.monthZoom))state.monthZoom=state.monthStyle==='compact'?0:state.monthStyle==='stacked'?1:2;if(!Number.isFinite(state.dayZoom))state.dayZoom=1;
-const MONTH_ROW_STEPS=[62,69,80,116,154],DAY_PPM_STEPS=[.72,.92,1.15,1.45,1.80];
+state.calendars=Array.isArray(state.calendars)&&state.calendars.length?state.calendars:structuredClone(defaults.calendars);state.calendars.forEach(cal=>{if(!cal.chipStyle)cal.chipStyle=cal.id==='holidays'?'icon':'fill'});if(!state.calendars.some(cal=>cal.id==='holidays-2'))state.calendars.push({id:'holidays-2',account:'Gmail',name:'国民の祝日',color:'#ff9500',visible:true,readonly:true,chipStyle:'star'});
+const MONTH_ROW_STEPS=[62,69,80,132,176],DAY_PPM_STEPS=[.72,.92,1.15,1.45,1.80];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function interpStep(values,level){const x=clamp(level,0,values.length-1),lo=Math.floor(x),hi=Math.ceil(x),t=x-lo;return values[lo]+(values[hi]-values[lo])*t}
 function currentDayPpm(){return DAY_PPM_STEPS[clamp(Math.round(state.dayZoom??1),0,DAY_PPM_STEPS.length-1)]}
@@ -479,6 +490,9 @@ function renderNav(d){const month=$('#monthTitle'),week=$('#weekdays'),back=$('#
  $('#viewBtn').innerHTML=state.view==='day'?icon(state.dayStyle==='multi'?'multi':'day'):state.view==='list'?icon('list'):icon(state.monthStyle==='compact'?'compact':state.monthStyle==='stacked'?'stacked':state.monthStyle==='detail'?'detail':'list');$('#searchBtn').innerHTML=icon('search');$('#addBtn').innerHTML=icon('plus')}
 function renderBottom(){$('#calendarsBtn').innerHTML=icon('calendar')+'<span>カレンダー</span>';$('#inboxBtn').innerHTML=icon('inbox')}
 function startGrid(y,m){const first=new Date(y,m,1),offset=(first.getDay()-state.weekStart+7)%7;return add(first,-offset)}
+function monthChipStyle(e){if(e.type==='reminder')return 'reminder';const style=getCal(e.calendarId)?.chipStyle;return style==='icon'||style==='star'||style==='fill'?style:'fill'}
+function monthChipLead(style){if(style==='icon')return '<span class="chip-symbol calendar" aria-hidden="true"></span>';if(style==='star')return '<span class="chip-symbol star" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 .7 7.55 3.84l3.47.5-2.51 2.45.59 3.46L6 8.62 2.9 10.25l.59-3.46L.98 4.34l3.47-.5L6 .7Z"/></svg></span>';return ''}
+function monthEventChip(e,zoom){const style=monthChipStyle(e),c=color(e),done=e.completed?'done':'',allDay=e.allDay?'all-day':'';if(e.type==='reminder')return `<button class="event-chip reminder ${done}" data-event="${e.id}" style="--c:${c}">${reminderCheck(e)}<span class="event-label"><span class="event-title">${esc(e.title)}</span></span></button>`;const showTime=zoom>=3&&style==='fill'&&!e.allDay;return `<button class="event-chip ${style} ${allDay}" data-event="${e.id}" data-chip-style="${style}" style="--c:${c}">${monthChipLead(style)}<span class="event-label"><span class="event-title">${esc(e.title)}</span>${showTime?`<span class="event-time">${fmt(e.start)}</span>`:''}</span></button>`}
 function renderMonth(d){
  const y=d.getFullYear(),m=d.getMonth(),start=startGrid(y,m),cells=[],zoom=Math.max(0,Math.min(4,state.monthZoom??(state.monthStyle==='compact'?0:state.monthStyle==='stacked'?1:2))),c=$('#content'),token=`${y}-${m}`,oldToken=renderMonth._token,oldTop=c.scrollTop;
  state.monthZoom=zoom;if(zoom===0)state.monthStyle='compact';else if(zoom===1)state.monthStyle='stacked';else state.monthStyle='detail';
@@ -486,8 +500,8 @@ function renderMonth(d){
   const dt=add(start,i),k=key(dt),xs=itemsFor(k).sort((a,b)=>(b.allDay?1:0)-(a.allDay?1:0)||a.start-b.start),out=dt.getMonth()!==m;let inner='';
   if(zoom===0){const cs=xs.slice(0,7),runs=[];cs.forEach(e=>{const clr=color(e),last=runs[runs.length-1];if(last&&last.c===clr)last.n++;else runs.push({c:clr,n:1})});inner=`<div class="compact-track">${runs.map(r=>`<span class="compact-dot ${r.n>1?'merge':''}" style="--c:${r.c};--n:${r.n}"></span>`).join('')}</div>`}
   else if(zoom===1){inner=`<div class="stack-wrap">${xs.slice(0,6).map(e=>`<span class="stack-bar" style="--c:${color(e)}"></span>`).join('')}</div>`}
-  else{const limit=zoom===2?5:Infinity,showTime=zoom>=3,visibleItems=Number.isFinite(limit)?xs.slice(0,limit):xs;inner=`<div class="detail-wrap">${visibleItems.map(e=>`<button class="event-chip ${e.allDay?'all-day':''} ${e.type==='reminder'?'reminder':''} ${e.completed?'done':''}" data-event="${e.id}" style="--c:${color(e)}">${e.type==='reminder'?reminderCheck(e):'<span class="marker">●</span>'}<span class="event-label">${showTime&&!e.allDay?`<b>${fmt(e.start)}</b> `:''}${esc(e.title)}</span></button>`).join('')}${Number.isFinite(limit)&&xs.length>limit?`<span class="more">ほか${xs.length-limit}件</span>`:''}</div>`}
-  cells.push(`<div class="day-cell zoom-${zoom} ${out?'out':''} ${same(dt,today)?'today':''} ${k===state.selected?'selected':''}" data-day="${k}"><button class="day-number" data-open="${k}" aria-label="${dt.getMonth()+1}月${dt.getDate()}日">${dt.getDate()}</button>${inner}</div>`)
+  else{const limit=zoom===2?5:Infinity,visibleItems=Number.isFinite(limit)?xs.slice(0,limit):xs;inner=`<div class="detail-wrap">${visibleItems.map(e=>monthEventChip(e,zoom)).join('')}${Number.isFinite(limit)&&xs.length>limit?`<span class="more">+${xs.length-limit}</span>`:''}</div>`}
+  cells.push(`<div class="day-cell zoom-${zoom} ${out?'out':''} ${same(dt,today)?'today':''} ${k===state.selected?'selected':''} ${zoom===2&&xs.length>5?'has-more':''}" data-day="${k}"><button class="day-number" data-open="${k}" aria-label="${dt.getMonth()+1}月${dt.getDate()}日">${dt.getDate()}</button>${inner}</div>`)
  }
  c.dataset.monthZoom=String(zoom);c.classList.toggle('month-expanded',zoom>=3);c.innerHTML=`<div class="month-grid zoom-${zoom}">${cells.join('')}</div>`;renderMonth._token=token;requestAnimationFrame(()=>{c.scrollTop=oldToken===token?Math.min(oldTop,Math.max(0,c.scrollHeight-c.clientHeight)):0});bindCommon();bindMonthLongPress()
 }
